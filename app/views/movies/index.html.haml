@@ -5,8 +5,8 @@
   %thead
     %tr
       %th#title_header{:class => ("hilite" if @sort_criteria == "title")}= link_to "Movie Title", :sort_criteria => "title"
-      %th#release_date_header{:class => ("hilite" if @sort_criteria == "release_date")}= link_to "Release Date", :sort_criteria => "release_date"
       %th More Info
+      %th#release_date_header{:class => ("hilite" if @sort_criteria == "release_date")}= link_to "Release Date", :sort_criteria => "release_date"
   %tbody
     - @movies.each do |movie|
       %tr
