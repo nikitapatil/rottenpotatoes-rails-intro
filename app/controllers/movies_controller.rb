@@ -20,8 +20,11 @@ class MoviesController < ApplicationController
 
     @all_ratings = Movie.get_ratings
     if params[:ratings] != nil
+      @all_ratings = params[:ratings]
       @movies = Movie.where("rating IN (?)", params[:ratings])
     end
+    session[:sort_criteria] = @sort_criteria
+    session[:ratings] = @all_ratings
 
   end
 
