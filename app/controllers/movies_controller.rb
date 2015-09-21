@@ -12,13 +12,17 @@ class MoviesController < ApplicationController
 
   def index
     @sort_criteria = params[:sort_criteria]
-    @movies = Movie.order(params[:sort_criteria])
+     if params[:ratings] != nil
+       @movies = Movie.order(params[:sort_criteria]).where("rating IN (?)", params[:ratings])
+     else
+      @movies = Movie.order(params[:sort_criteria])
+     end
 
     @all_ratings = Movie.get_ratings
-
     if params[:ratings] != nil
       @movies = Movie.where("rating IN (?)", params[:ratings])
     end
+
   end
 
   def new
