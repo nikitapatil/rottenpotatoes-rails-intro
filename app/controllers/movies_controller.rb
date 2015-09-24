@@ -12,19 +12,22 @@ class MoviesController < ApplicationController
 
   def index
     @sort_criteria = params[:sort_criteria]
-     if params[:ratings] != nil
-       @movies = Movie.order(params[:sort_criteria]).where("rating IN (?)", params[:ratings])
-     else
+    #  if params[:ratings] != nil
+    #    @movies = Movie.order(params[:sort_criteria]).where("rating IN (?)", params[:ratings])
+    #  else
       @movies = Movie.order(params[:sort_criteria])
-     end
-
+    #  end
+# populate the checkboxes
     @all_ratings = Movie.get_ratings
-    if params[:ratings] != nil
-      @all_ratings = params[:ratings]
-      @movies = Movie.where("rating IN (?)", params[:ratings])
-    end
     session[:sort_criteria] = @sort_criteria
     session[:ratings] = @all_ratings
+    if params[:ratings] != nil
+      @selected_ratings = params[:ratings]
+      @movies = Movie.where("rating IN (?)", params[:ratings])
+    else
+      @selected_ratings = @all_ratings
+    end
+
 
   end
 
