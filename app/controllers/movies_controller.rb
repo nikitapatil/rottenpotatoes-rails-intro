@@ -21,7 +21,7 @@ class MoviesController < ApplicationController
       # params[:sort_criteria] = session[:sort_criteria]
       # @movies = Movie.order(params[:sort_criteria])
       # redirect_to movies_path(:sort_criteria => params[:sort_criteria], :ratings =>params[:ratings])
-    end
+    # end
 
 
 # populate the checkboxes
