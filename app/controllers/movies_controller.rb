@@ -11,24 +11,36 @@ class MoviesController < ApplicationController
   end
 
   def index
+
+    
     @sort_criteria = params[:sort_criteria]
-    #  if params[:ratings] != nil
-    #    @movies = Movie.order(params[:sort_criteria]).where("rating IN (?)", params[:ratings])
-    #  else
+    if params[:sort_criteria] == "title" || params[:sort_criteria] == "release_date"
       @movies = Movie.order(params[:sort_criteria])
-    #  end
-# populate the checkboxes
-    @all_ratings = Movie.get_ratings
-    session[:sort_criteria] = @sort_criteria
-    session[:ratings] = @all_ratings
-    if params[:ratings] != nil
-      @selected_ratings = params[:ratings]
-      @movies = Movie.where("rating IN (?)", params[:ratings])
-    else
-      @selected_ratings = @all_ratings
+      session[:sort_criteria] = params[:sort_criteria]
+    elsif session.has_key?(:sort_criteria)
+      params[:sort_criteria] = session[:sort_criteria]
+      # @movies = Movie.order(params[:sort_criteria])
+      redirect_to movies_path(:sort_criteria => params[:sort_criteria], :ratings =>params[:ratings])
     end
 
 
+# populate the checkboxes
+    @all_ratings = Movie.get_ratings
+    if params[:ratings] != nil
+      session[:ratings] = params[:ratings]
+      @selected_ratings = params[:ratings]
+      @movies = Movie.where("rating IN (?)", params[:ratings])
+    else
+      if session.has_key?(:ratings)
+        params[:ratings] = session[:ratings]
+        # redirect_to movies_path(:sort_criteria => params[:sort_criteria], :ratings =>params[:ratings])
+      end
+      @selected_ratings = @all_ratings
+    end
+
+    #  if redirect == 1
+
+    #  end
   end
 
   def new
